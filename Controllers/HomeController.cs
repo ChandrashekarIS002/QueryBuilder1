@@ -2,8 +2,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Script.Serialization;
 
 namespace QueryBuilder.Controllers
 {
@@ -33,15 +35,27 @@ namespace QueryBuilder.Controllers
 
         public JsonResult GetColumnNames(string TableName,string DatabaseName)
         {
-            using (var context = new masterEntities())
-            {
-                var Tables = context.Database.SqlQuery<string>(
-//                    SELECT COLUMN_NAME
-//FROM Newspaper.INFORMATION_SCHEMA.COLUMNS
-//WHERE TABLE_NAME = 'BillMaster'
-                "SELECT COLUMN_NAME FROM" + DatabaseName.ToString()+".INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME= " + TableName.ToString()).ToList();
-                return Json(Tables, JsonRequestBehavior.AllowGet);
+            JavaScriptSerializer js = new JavaScriptSerializer();
+            string [] data = js.Deserialize<string[]>(TableName);
+
+               using (var context = new masterEntities())
+              {
+                foreach (string a in data)
+                {
+
+                    var Tables = context.Database.SqlQuery<string>(
+
+                    "SELECT COLUMN_NAME FROM " + DatabaseName.ToString() + ".INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = " + a).ToList();
+
+
+           //    SELECT COLUMN_NAME FROM Newspaper.INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'BillMaster'
+
+
+                    return Json(Tables, JsonRequestBehavior.AllowGet);
+                }
+
             }
+            return null;
         }
 
     }
