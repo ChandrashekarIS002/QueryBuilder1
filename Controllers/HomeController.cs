@@ -43,9 +43,9 @@ namespace QueryBuilder.Controllers
                 foreach (string a in data)
                 {
 
-                    var Tables = context.Database.SqlQuery<string>(
+              var Tables = context.Database.SqlQuery<string>(
 
-                    "SELECT COLUMN_NAME FROM " + DatabaseName.ToString() + ".INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = " + a).ToList();
+              "SELECT COLUMN_NAME FROM " + DatabaseName.ToString()+".INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME="+ a).ToList();
 
 
            //    SELECT COLUMN_NAME FROM Newspaper.INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'BillMaster'
