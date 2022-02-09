@@ -1,0 +1,66 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+@Html.DropDownList("ddlDatabaseName", new SelectList(ViewBag.Data), "Select DataBase", new { @class = "form-control", @id = "ddlDatabaseName", onchange = "getTableNames(this)" })
+
+    <script>
+        function getTableNames(ddlObject) {
+            var ddlSelectedValue = ddlObject.value;
+            $.ajax(
+                {
+                    url: '/Home/GetTableName?databaseName=' + ddlSelectedValue ,
+                    type: 'GET',
+                    data: "",
+                    contentType: 'application/json; charset=utf-8',
+                    success: function (data) {
+                       
+                        //Text -date children - data.columns.name
+                        getColumnNames(JSON.stringify(data), ddlSelectedValue);
+                    },
+                    error: function () {
+                        alert("error");
+                    }
+                });
+        
+        }
+
+        function getColumnNames(tableName,DatabaseName) {
+            $.ajax(
+                {
+                    url: '/Home/GetColumnNames',
+                    type: 'GET',
+                    data: { TableName: tableName, DatabaseName: DatabaseName},
+                    contentType: 'application/json; charset=utf-8',
+                    success: function (data) {
+
+                        //Text -date children - data.columns.name
+                        alert(data);
+                    },
+                    error: function () {
+                        alert("error");
+                    }
+                });
+        }
+
+        //var treeObject = [{
+        //    text: "Table Name",
+        //    checked: true,
+        //    id: 15,
+        //    otherDatas: "Other Datas",
+        //    children: [
+        //        { text: "Child 1", checked: false },
+        //        { text: "Child 2" }
+        //    ]
+        //}, {
+        //    text: "Table Name",
+        //    children: [
+        //        {
+        //            text: "Table Name",
+        //            children: [
+        //                { text: "Child 3", checked: false },
+        //                { text: "Child 4" }
+        //            ]
+
+
+    </script>
