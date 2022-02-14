@@ -9,5 +9,8 @@ namespace QueryBuilder.Models
     {
         public string data { get; set; }
         public string Tables { get; set; }
+
+        public string ColumnName { get; set; }  
+
     }
 }

@@ -40,28 +40,36 @@ namespace QueryBuilder.Controllers
 
                using (var context = new masterEntities())
               {
-                foreach (string a in data)
-                {
-                    List<Class1> list = new List<Class1>();
+                  foreach (string a in data)
+                 {
+                    
+                    List<Class1> TbName = new List<Class1>();
+                    
+                   var b = a.ToString();
+
+                   
+
+                  
+                   
+
+
                     var Tables = context.Database.SqlQuery<string>(
 
-              "SELECT COLUMN_NAME FROM " + DatabaseName+".INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME= '"+a+"'").ToList();
+                    "SELECT COLUMN_NAME FROM " + DatabaseName+".INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME= '"+a+"'").ToList();
 
 
                     //    SELECT COLUMN_NAME FROM Newspaper.INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'BillMaster'
                    foreach (string Col in Tables)
                     {
-                        List<Class1> mylist = new List<Class1>();
-                        Class1 c = new Class1();
-                        c.Tables = Col;
+                        
                         
                     }
-                    return Json(Tables, JsonRequestBehavior.AllowGet);
-                }
-                
+                    
+                  }
+                return null;
 
             }
-            return null;
+           
         }
 
     }
