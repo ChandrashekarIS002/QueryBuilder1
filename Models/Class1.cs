@@ -7,10 +7,10 @@ namespace QueryBuilder.Models
 {
     public class Class1
     {
-        public string data { get; set; }
-        public string Tables { get; set; }
+        public string text { get; set; } //tableName
+        public List<string> Children { get; set; } //ColumnName
 
-        public string ColumnName { get; set; }  
+        //public string ColumnName { get; set; }  
 
     }
 }

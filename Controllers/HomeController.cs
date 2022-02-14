@@ -19,7 +19,7 @@ namespace QueryBuilder.Controllers
                     "Select name from sys.databases WHERE name NOT IN('master', 'tempdb', 'model', 'msdb');").ToList();
                 ViewBag.Data = dbNames;
             }
-           
+
             return View();
         }
 
@@ -33,43 +33,27 @@ namespace QueryBuilder.Controllers
             }
         }
 
-        public JsonResult GetColumnNames(string TableName,string DatabaseName)
+        public JsonResult GetColumnNames(string TableName, string DatabaseName)
         {
             JavaScriptSerializer js = new JavaScriptSerializer();
-            string [] data = js.Deserialize<string[]>(TableName);
-
-               using (var context = new masterEntities())
-              {
-                  foreach (string a in data)
-                 {
-                    
-                    List<Class1> TbName = new List<Class1>();
-                    
-                   var b = a.ToString();
-
-                   
-
-                  
-                   
-
-
+            string[] data = js.Deserialize<string[]>(TableName);
+            List<Class1> TbName = new List<Class1>();
+            using (var context = new masterEntities())
+            {
+                foreach (string a in data)
+                {
+                    Class1 obj = new Class1();
+                    obj.text = a;
                     var Tables = context.Database.SqlQuery<string>(
-
-                    "SELECT COLUMN_NAME FROM " + DatabaseName+".INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME= '"+a+"'").ToList();
-
-
-                    //    SELECT COLUMN_NAME FROM Newspaper.INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'BillMaster'
-                   foreach (string Col in Tables)
-                    {
-                        
-                        
-                    }
-                    
-                  }
-                return null;
+                    "SELECT COLUMN_NAME FROM " + DatabaseName + ".INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME= '" + a + "'").ToList();
+                    obj.Children = Tables;
+                    TbName.Add(obj);
+                }
 
             }
-           
+            return Json(TbName, JsonRequestBehavior.AllowGet);
+
+
         }
 
     }

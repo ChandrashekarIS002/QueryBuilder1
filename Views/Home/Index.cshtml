@@ -42,25 +42,35 @@
                     }
                 });
         }
+var treeObject = [{
+        text: "data", 
+        checked: true,
+        id: 15,
+        otherDatas: "Other Datas",
+        children: [ 
+            { text: "Child 1" , checked: false },
+            { text: "Child 2" }
+        ]
+    }, {
+        text: "Table Name",
+        children: [
+            {
+                text: "Table Name",
+                children: [
+                    { text: "Child 3", checked: false },
+                    { text: "Child 4" }
+                ]
+            }
+        ]
+    }
+    ]
 
-        //var treeObject = [{
-        //    text: "Table Name",
-        //    checked: true,
-        //    id: 15,
-        //    otherDatas: "Other Datas",
-        //    children: [
-        //        { text: "Child 1", checked: false },
-        //        { text: "Child 2" }
-        //    ]
-        //}, {
-        //    text: "Table Name",
-        //    children: [
-        //        {
-        //            text: "Table Name",
-        //            children: [
-        //                { text: "Child 3", checked: false },
-        //                { text: "Child 4" }
-        //            ]
+    var myTree = new TreeView(treeObject);
+    document.body.appendChild(myTree.root)
+        var myTree = new TreeView(treeObject, {
+               showAlwaysCheckBox: false,   
+         fold: true,
+        openAllFold: false    
 
-
-    </script>
+    });
+  </script>
