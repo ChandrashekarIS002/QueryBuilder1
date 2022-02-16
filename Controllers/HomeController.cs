@@ -42,11 +42,21 @@ namespace QueryBuilder.Controllers
             {
                 foreach (string a in data)
                 {
+                    List<children> TbCol = new List<children>();
                     Class1 obj = new Class1();
                     obj.text = a;
+                    //obj.@checked = false;
                     var Tables = context.Database.SqlQuery<string>(
                     "SELECT COLUMN_NAME FROM " + DatabaseName + ".INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME= '" + a + "'").ToList();
-                    obj.Children = Tables;
+                   
+                    foreach (string ColumnName in Tables)
+                    {
+                        children obj1 = new children();
+
+                        obj1.text = ColumnName;
+                        TbCol.Add(obj1);
+                     }
+                    obj.children = TbCol;
                     TbName.Add(obj);
                 }
 

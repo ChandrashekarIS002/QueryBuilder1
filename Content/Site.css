@@ -20,5 +20,18 @@
 input,
 select,
 textarea {
-    max-width: 280px;
+    max-width: 220px;
 }
+.aside {
+    width: 20%;
+    border-style: ridge;
+    height: 650px;
+    overflow-x: auto;
+}
+
+
+
+
+
+
+

@@ -1,20 +1,24 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }
+<div class="aside" id="div-aside">
+    @Html.DropDownList("ddlDatabaseName", new SelectList(ViewBag.Data), "Select DataBase", new { @class = "form-control", @id = "ddlDatabaseName", onchange = "getTableNames(this)" })
 
-@Html.DropDownList("ddlDatabaseName", new SelectList(ViewBag.Data), "Select DataBase", new { @class = "form-control", @id = "ddlDatabaseName", onchange = "getTableNames(this)" })
-
+</div>
     <script>
+
+        /*const { data } = require("jquery");*/
+        var treeObject = null;
         function getTableNames(ddlObject) {
             var ddlSelectedValue = ddlObject.value;
             $.ajax(
                 {
-                    url: '/Home/GetTableName?databaseName=' + ddlSelectedValue ,
+                    url: '/Home/GetTableName?databaseName=' + ddlSelectedValue,
                     type: 'GET',
                     data: "",
                     contentType: 'application/json; charset=utf-8',
                     success: function (data) {
-                       
+
                         //Text -date children - data.columns.name
                         getColumnNames(JSON.stringify(data), ddlSelectedValue);
                     },
@@ -22,55 +26,32 @@
                         alert("error");
                     }
                 });
-        
+
         }
 
-        function getColumnNames(tableName,DatabaseName) {
+        function getColumnNames(tableName, DatabaseName) {
             $.ajax(
                 {
                     url: '/Home/GetColumnNames',
                     type: 'GET',
-                    data: { TableName: tableName, DatabaseName: DatabaseName},
+                    data: { TableName: tableName, DatabaseName: DatabaseName },
                     contentType: 'application/json; charset=utf-8',
                     success: function (data) {
+                        var myTree = new TreeView(data);
+                        //document.body.appendChild(myTree.root)
+                        document.getElementById('div-aside').appendChild(myTree.root);
+                        var myTree = new TreeView(data, {
+                            showAlwaysCheckBox: false,
+                            fold: true,
+                            openAllFold: false
 
-                        //Text -date children - data.columns.name
-                        alert(data);
+                        });
                     },
                     error: function () {
                         alert("error");
                     }
                 });
         }
-var treeObject = [{
-        text: "data", 
-        checked: true,
-        id: 15,
-        otherDatas: "Other Datas",
-        children: [ 
-            { text: "Child 1" , checked: false },
-            { text: "Child 2" }
-        ]
-    }, {
-        text: "Table Name",
-        children: [
-            {
-                text: "Table Name",
-                children: [
-                    { text: "Child 3", checked: false },
-                    { text: "Child 4" }
-                ]
-            }
-        ]
-    }
-    ]
 
-    var myTree = new TreeView(treeObject);
-    document.body.appendChild(myTree.root)
-        var myTree = new TreeView(treeObject, {
-               showAlwaysCheckBox: false,   
-         fold: true,
-        openAllFold: false    
+    </script>
 
-    });
-  </script>
