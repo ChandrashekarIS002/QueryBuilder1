@@ -1,6 +1,7 @@
 function TreeView(datas, options) {
     this.root = document.createElement("div");
     this.root.className = "treeview";
+    this.root.id = "div-data";
     let t = this;
 
 
@@ -8,7 +9,11 @@ function TreeView(datas, options) {
     var defaultOptions = {
         showAlwaysCheckBox: true,
         fold: true,
-        openAllFold:false
+        openAllFold: false
+       
+
+
+       
     }
 
     options = Object.assign(defaultOptions, options);

@@ -1,10 +1,19 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }
-<div class="aside" id="div-aside">
-    @Html.DropDownList("ddlDatabaseName", new SelectList(ViewBag.Data), "Select DataBase", new { @class = "form-control", @id = "ddlDatabaseName", onchange = "getTableNames(this)" })
+<div class="aside" id="div-aside" data-role="controlgroup" >
+    <div class="checkbox">
+        @Html.DropDownList("ddlDatabaseName", new SelectList(ViewBag.Data), "Select DataBase", new { @class = "form-control", @id = "ddlDatabaseName", onchange = "getTableNames(this)" })
+    </div>
+</div>
+<input id="button1" type="button" value="Click!" />
+<div class="header" id="div-up">
+
 
 </div>
+
+
+
     <script>
 
         /*const { data } = require("jquery");*/
@@ -26,7 +35,7 @@
                         alert("error");
                     }
                 });
-
+                
         }
 
         function getColumnNames(tableName, DatabaseName) {
@@ -42,16 +51,23 @@
                         document.getElementById('div-aside').appendChild(myTree.root);
                         var myTree = new TreeView(data, {
                             showAlwaysCheckBox: false,
+                          
                             fold: true,
-                            openAllFold: false
-
-                        });
+                            openAllFold: false,
+                           // multiSelect: false
+                      });
                     },
                     error: function () {
                         alert("error");
                     }
                 });
         }
+        var value = $('#dropDownId:selected').text()
+        $(document).ready(function () {
+            $('#button1').click(function () {
+                alert($('#div-aside :selected').text());
+            });
+        });
 
     </script>
 
