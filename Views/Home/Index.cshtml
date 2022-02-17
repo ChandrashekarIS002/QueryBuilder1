@@ -51,12 +51,13 @@
                         document.getElementById('div-aside').appendChild(myTree.root);
                         var myTree = new TreeView(data, {
                             showAlwaysCheckBox: false,
-                          
+
                             fold: true,
                             openAllFold: false,
-                           // multiSelect: false
-                      });
+                            // multiSelect: false
+                        });
                     },
+                   
                     error: function () {
                         alert("error");
                     }
